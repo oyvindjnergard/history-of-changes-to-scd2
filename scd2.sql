@@ -8,7 +8,9 @@ CREATE TABLE bronze (
 
 INSERT INTO bronze(key, name, status, extract_day) VALUES (1, 'Jon', 'Active', '2025-08-01');
 INSERT INTO bronze(key, name, status, extract_day) VALUES (1, 'John', 'Active', '2025-08-05');
+INSERT INTO bronze(key, name, status, extract_day) VALUES (1, 'Jon', 'Active', '2025-08-07');
 INSERT INTO bronze(key, name, status, extract_day) VALUES (1, null, 'Deleted', '2025-08-10');
+INSERT INTO bronze(key, name, status, extract_day) VALUES (1, 'Jon', 'Active', '2025-08-15');
 INSERT INTO bronze(key, name, status, extract_day) VALUES (2, 'Bjarne', 'Active', '2025-08-10');
 
 select * from bronze;
@@ -23,11 +25,10 @@ with base as (
             lead(extract_day) over (partition by key order by extract_day asc),
             '9999-12-31'
         ) as valid_to,
-        case
-            lead(status) over (partition by key order by extract_day asc)
-            when 'Active'
-            then 0
-            else 1
+        case 
+            when lead(status) over (partition by key order by extract_day asc) is null
+            then 1
+            else 0
         end as is_valid
     from bronze
 )
