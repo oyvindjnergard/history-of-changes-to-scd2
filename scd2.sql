@@ -28,6 +28,9 @@ with base as (
         case 
             when lead(status) over (partition by key order by extract_day asc) is null
             then 1
+			when lead(status) over (partition by key order by extract_day asc) = 'Deleted' 
+  				AND	lead(id) over (partition by key order by extract_day asc) = first_value(id) over (partition by key order by extract_day desc)
+            then 1  
             else 0
         end as is_valid
     from bronze
