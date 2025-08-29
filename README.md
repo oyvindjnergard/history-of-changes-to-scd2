@@ -21,6 +21,8 @@ A simple example to illustrate how one can create a SCD2 table from a table cont
 | 1	  | Jon	   | 2025-08-15	| 9999-12-31 | 1        |
 | 2	  | Bjarne | 2025-08-10	| 2025-08-20 | 1        |
 
+Can be tested at https://sqlfiddle.com/postgresql/online-compiler
+
 # Disclaimer: 
 The example is made purely to illustrate a concept.
 This should be further tested and verified before it's put into production. 
